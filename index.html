@@ -186,7 +186,7 @@ tbody td { padding:12px 14px; font-size:13px; color:#333; vertical-align:middle;
     <h1>공지 관리</h1>
     <div class="search-card">
       <div class="search-row">
-        <div class="fg"><label>이름</label><input type="text" placeholder="공지 제목을 입력하세요" style="width:220px"></div>
+        <div class="fg"><label>이름</label><input type="text" placeholder="사용자에게 노출됩니다, 이모지 사용 금지" style="width:220px"></div>
         <div class="fg"><label>시작일자</label><div class="date-range"><input type="text" placeholder="yyyy-mm-dd"><span class="date-sep">~</span><input type="text" placeholder="yyyy-mm-dd"></div></div>
         <div class="fg"><label>활성화</label><select style="width:110px"><option>전체</option><option>On</option><option>Off</option></select></div>
       </div>
@@ -278,9 +278,9 @@ function showAdd() {
     <h1>공지 등록</h1>
     <div class="form-card">
       <div class="form-card-title">기본 정보</div>
-      <div class="ff"><label>이름 <span class="req">*</span></label><input type="text" placeholder="내부 관리용 이름을 입력하세요" style="width:360px"><div class="hint">목록에서 공지를 구분하기 위한 내부 관리용 이름입니다</div></div>
-      <div class="ff"><label>제목 <span class="req">*</span></label><input type="text" placeholder="공지 제목을 입력하세요"><div class="hint">실사용자에게 보여지는 정보 / 띄어쓰기 포함 15자 이내 권장 (이상 말줄임 표기)</div></div>
-      <div class="ff"><label>시작일자 <span class="req">*</span></label><div class="date-input-wrap"><input type="text" placeholder="yyyy-mm-dd"><span class="cal-icon">📅</span></div><div class="hint">시작일 00시 00분에 활성화 상태면 사용자 화면에 자동 노출됩니다</div></div>
+      <div class="ff"><label>이름 <span class="req">*</span></label><input type="text" placeholder="이름을 입력하세요" style="width:360px"><div class="hint">목록에서 공지를 구분하기 위한 내부 관리용 이름입니다</div></div>
+      <div class="ff"><label>제목 <span class="req">*</span></label><input type="text" placeholder="사용자에게 노출됩니다, 이모지 사용 금지"><div class="hint">1줄 : 띄어쓰기 포함해서 15자 이내 초과 시 말줄임처리<br>2줄 : 띄어쓰기 포함해서 15자 이내 초과 시 말줄임처리</div></div>
+      <div class="ff"><label>시작일자 <span class="req">*</span></label><div class="date-input-wrap"><input type="text" placeholder="yyyy-mm-dd"><span class="cal-icon">📅</span></div><div class="hint">* 활성화되어 있다면 노출 시작일에 사용자에게 자동 노출됩니다</div></div>
       <div class="ff"><label>종료일자 <span class="req">*</span></label><div class="date-input-wrap"><input type="text" placeholder="yyyy-mm-dd"><span class="cal-icon">📅</span></div><div class="hint">미입력 시 상시노출됩니다</div></div>
       <div class="ff" style="margin-bottom:0"><label>링크 URL <span class="req">*</span></label><input type="text" placeholder="https://soomgo.com/..."><div class="hint">웹링크를 입력해 주세요 (앱에서는 웹뷰로 랜딩됩니다)</div></div>
     </div>
