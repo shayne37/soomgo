@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>고수 홈 성공 가이드 관리 - Mockup</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:-apple-system,BlinkMacSystemFont,'Noto Sans KR',sans-serif; font-size:14px; color:#333; background:#f5f5f5; display:flex; min-height:100vh; }
+    .topbar { position:fixed; top:0; left:0; right:0; height:56px; background:#4a5568; display:flex; align-items:center; justify-content:space-between; padding:0 20px; z-index:100; box-shadow:0 2px 4px rgba(0,0,0,0.15); }
+    .logo { display:flex; align-items:center; gap:10px; }
+    .logo-icon { width:34px; height:34px; background:rgba(255,255,255,0.2); border-radius:50%; display:flex; align-items:center; justify-content:center; }
+    .logo span { color:#fff; font-size:17px; font-weight:700; }
+    .topbar-btns button { background:none; border:none; color:rgba(255,255,255,0.85); font-size:18px; cursor:pointer; width:32px; height:32px; border-radius:6px; }
+    .sidebar { position:fixed; top:56px; left:0; width:240px; height:calc(100vh - 56px); background:#fff; border-right:1px solid #e2e8f0; overflow-y:auto; z-index:90; }
+    .sidebar-user { padding:20px 16px 16px; text-align:center; border-bottom:1px solid #f0f0f0; }
+    .user-avatar { width:44px; height:44px; background:#693BF2; border-radius:50%; margin:0 auto 10px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:16px; }
+    .user-team { font-size:11px; color:#999; margin-bottom:3px; }
+    .user-name { font-size:15px; font-weight:700; color:#222; }
+    .user-email { font-size:11px; color:#aaa; margin-top:3px; }
+    .user-role { display:inline-block; margin-top:8px; font-size:11px; font-weight:700; color:#693BF2; background:#f0ebff; border:1px solid #d4c8fc; border-radius:20px; padding:2px 10px; }
+    .menu-item { display:flex; align-items:center; gap:9px; padding:9px 16px; cursor:pointer; color:#666; font-size:13px; }
+    .menu-item:hover { background:#fafafa; }
+    .menu-item .icon { width:17px; font-size:14px; opacity:0.7; flex-shrink:0; }
+    .menu-group-toggle { display:flex; align-items:center; gap:9px; padding:9px 16px; color:#333; font-size:13px; font-weight:600; background:#f8f9fa; }
+    .menu-sub { background:#fafafa; }
+    .menu-sub .menu-item { padding-left:38px; font-size:12.5px; color:#777; }
+    .menu-sub .menu-item:hover { color:#693BF2; background:#f4f0ff; }
+    .menu-sub .menu-item.active-sub { color:#693BF2; font-weight:700; background:#f0ebff; border-right:3px solid #693BF2; }
+    .main { margin-left:240px; margin-top:56px; flex:1; padding:28px 32px 48px; }
+    .breadcrumb { font-size:12px; color:#aaa; margin-bottom:8px; display:flex; gap:5px; align-items:center; flex-wrap:wrap; }
+    .breadcrumb a { color:#aaa; text-decoration:none; cursor:pointer; }
+    .breadcrumb a:hover { color:#693BF2; }
+    .breadcrumb-sep { color:#d1d5db; }
+    h1 { font-size:22px; font-weight:800; margin-bottom:22px; color:#1a202c; }
+    .subhead { display:flex; justify-content:space-between; gap:16px; align-items:flex-end; margin-bottom:20px; flex-wrap:wrap; }
+    .subhead-copy { color:#6b7280; font-size:13px; line-height:1.55; }
+    .subhead-copy strong { color:#374151; }
+    .search-card, .form-card, .preview-card, .stack-card, .sort-card { background:#fff; border:1px solid #e2e8f0; border-radius:10px; }
+    .search-card { padding:20px 22px; margin-bottom:18px; }
+    .search-row { display:flex; gap:18px; align-items:flex-end; flex-wrap:wrap; }
+    .search-row + .search-row { margin-top:14px; }
+    .fg { display:flex; flex-direction:column; gap:5px; }
+    .fg label { font-size:12px; font-weight:600; color:#555; }
+    .fg input, .fg select, .fg textarea, .ff input, .ff select, .ff textarea { border:1px solid #d1d5db; border-radius:7px; outline:none; background:#fff; color:#333; }
+    .fg input, .fg select { height:36px; padding:0 11px; font-size:13px; }
+    .ff input, .ff select { width:100%; height:40px; padding:0 12px; font-size:14px; }
+    .fg textarea, .ff textarea { width:100%; min-height:110px; padding:12px; resize:vertical; font-size:14px; }
+    .fg input:focus, .fg select:focus, .fg textarea:focus, .ff input:focus, .ff select:focus, .ff textarea:focus { border-color:#693BF2; box-shadow:0 0 0 3px rgba(105,59,242,0.1); }
+    .date-range { display:flex; align-items:center; gap:7px; }
+    .date-range input { width:130px; }
+    .date-sep { color:#bbb; font-size:13px; }
+    .btn-group, .tbl-actions, .action-row, .tab-row, .pill-row { display:flex; gap:8px; flex-wrap:wrap; }
+    .btn, .btn-primary, .btn-secondary, .btn-tertiary, .btn-back, .btn-save, .btn-chip, .sort-handle {
+      height:36px; padding:0 16px; border-radius:7px; font-size:13px; cursor:pointer; border:none;
+    }
+    .btn { padding:0 18px; }
+    .btn-reset, .btn-secondary, .btn-tertiary, .btn-back { background:#fff; border:1px solid #d1d5db; color:#555; }
+    .btn-search, .btn-primary, .btn-save { background:#693BF2; color:#fff; font-weight:700; }
+    .btn-chip { height:32px; padding:0 14px; border-radius:999px; background:#fff; border:1px solid #d1d5db; color:#4b5563; font-size:12px; font-weight:600; }
+    .btn-chip.active { background:#f0ebff; color:#693BF2; border-color:#d4c8fc; }
+    .tbl-ctrl { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; gap:12px; flex-wrap:wrap; }
+    .result-count { font-size:14px; color:#555; }
+    .result-count strong { color:#693BF2; font-weight:700; }
+    .info-banner { background:#f8f6ff; border:1px solid #e4dcff; color:#5b45c5; font-size:12px; line-height:1.55; padding:12px 14px; border-radius:9px; margin-bottom:16px; }
+    .tbl-wrap { background:#fff; border:1px solid #e2e8f0; border-radius:10px; overflow:hidden; }
+    .pg-row { display:flex; justify-content:flex-end; align-items:center; gap:8px; padding:10px 16px; border-bottom:1px solid #f0f0f0; font-size:13px; color:#666; }
+    .pg-row.bottom { border-top:1px solid #f0f0f0; border-bottom:none; }
+    .pg-row select { height:30px; border:1px solid #d1d5db; border-radius:5px; padding:0 6px; font-size:13px; }
+    .pg-btn { background:#fff; border:1px solid #d1d5db; width:28px; height:28px; border-radius:5px; cursor:pointer; font-size:13px; color:#555; }
+    table { width:100%; border-collapse:collapse; }
+    thead tr { background:#f8f9fa; }
+    thead th { padding:11px 14px; font-size:12.5px; font-weight:700; color:#555; border-bottom:1px solid #e2e8f0; text-align:left; white-space:nowrap; }
+    tbody tr { border-bottom:1px solid #f0f0f0; }
+    tbody tr:last-child { border-bottom:none; }
+    tbody tr:hover { background:#fafafa; }
+    tbody td { padding:12px 14px; font-size:13px; color:#333; vertical-align:middle; }
+    .status { display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; padding:3px 10px; border-radius:20px; white-space:nowrap; }
+    .s-wait { background:#f3f4f6; color:#6b7280; }
+    .s-on { background:#ecfdf5; color:#059669; }
+    .s-end { background:#f9fafb; color:#9ca3af; border:1px solid #e5e7eb; }
+    .dot { width:6px; height:6px; border-radius:50%; display:inline-block; }
+    .d-wait { background:#9ca3af; }
+    .d-on { background:#10b981; }
+    .d-end { background:#d1d5db; }
+    .label-pill { display:inline-flex; align-items:center; height:26px; padding:0 10px; border-radius:999px; font-size:12px; font-weight:700; }
+    .label-required { background:#fff1f2; color:#e11d48; }
+    .label-guide { background:#eff6ff; color:#2563eb; }
+    .label-knowhow { background:#ecfdf5; color:#059669; }
+    .tgl-wrap { display:flex; align-items:center; gap:8px; }
+    .tgl { position:relative; width:40px; height:22px; cursor:pointer; display:inline-block; flex-shrink:0; }
+    .tgl input { opacity:0; width:0; height:0; position:absolute; }
+    .tgl-track { position:absolute; inset:0; border-radius:11px; background:#d1d5db; transition:background 0.2s; }
+    .tgl input:checked + .tgl-track { background:#693BF2; }
+    .tgl-thumb { position:absolute; top:2px; left:2px; width:18px; height:18px; background:#fff; border-radius:50%; transition:transform 0.2s; box-shadow:0 1px 3px rgba(0,0,0,0.2); pointer-events:none; }
+    .tgl input:checked ~ .tgl-thumb { transform:translateX(18px); }
+    .tgl-on { font-size:12px; font-weight:700; color:#693BF2; }
+    .tgl-off { font-size:12px; color:#9ca3af; }
+    .act-edit, .act-disabled { border-radius:5px; padding:5px 13px; font-size:12px; font-weight:600; }
+    .act-edit { color:#693BF2; background:#fff; border:1px solid #693BF2; cursor:pointer; }
+    .act-disabled { color:#d1d5db; background:#f9fafb; border:1px solid #e5e7eb; cursor:not-allowed; }
+    .tip-wrap { position:relative; display:inline-block; }
+    .tip-wrap:hover .tip { opacity:1; }
+    .tip { opacity:0; position:absolute; bottom:calc(100% + 7px); left:50%; transform:translateX(-50%); background:#374151; color:#fff; font-size:11px; padding:5px 10px; border-radius:6px; white-space:nowrap; z-index:20; transition:opacity 0.15s; pointer-events:none; }
+    .tip::after { content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:5px solid transparent; border-top-color:#374151; }
+    .form-shell { display:grid; grid-template-columns:minmax(0, 780px) 320px; gap:20px; align-items:start; }
+    .form-card { padding:28px 32px; }
+    .form-card + .form-card { margin-top:16px; }
+    .form-card-title { font-size:15px; font-weight:700; color:#1a202c; padding-bottom:14px; border-bottom:1px solid #f0f0f0; margin-bottom:24px; }
+    .ff-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+    .ff-grid .full { grid-column:1 / -1; }
+    .ff { margin-bottom:22px; }
+    .ff:last-child { margin-bottom:0; }
+    .ff label { display:block; font-size:13px; font-weight:700; color:#333; margin-bottom:7px; }
+    .hint { font-size:11.5px; color:#9ca3af; margin-top:6px; line-height:1.5; white-space:pre-line; }
+    .req { color:#693BF2; }
+    .choice-row { display:flex; gap:12px; flex-wrap:wrap; }
+    .choice { display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border:1px solid #d1d5db; border-radius:8px; min-height:40px; font-size:13px; color:#374151; background:#fff; }
+    .choice.active { border-color:#693BF2; background:#f7f3ff; color:#5b45c5; }
+    .preview-card, .stack-card, .sort-card { padding:18px; }
+    .stack-card + .stack-card, .preview-card + .stack-card { margin-top:16px; }
+    .summary-title { font-size:14px; font-weight:700; color:#1f2937; margin-bottom:12px; }
+    .summary-list { display:grid; gap:10px; }
+    .summary-item { padding:12px; border:1px solid #ebeef3; border-radius:8px; background:#fafbfc; }
+    .summary-item strong { display:block; font-size:12px; color:#6b7280; margin-bottom:4px; }
+    .summary-item span { font-size:13px; color:#111827; line-height:1.45; }
+    .mini-badge { display:inline-block; font-size:11px; font-weight:700; color:#693BF2; background:#f0ebff; border:1px solid #d4c8fc; border-radius:999px; padding:4px 9px; margin-bottom:10px; }
+    .guide-preview { border:1px solid #ebeef3; border-radius:12px; background:linear-gradient(180deg, #fff 0%, #f8f9ff 100%); overflow:hidden; }
+    .guide-preview-head { padding:16px 18px; border-bottom:1px solid #eef2f7; }
+    .guide-preview-body { padding:16px 18px; display:grid; gap:10px; }
+    .guide-row { border:1px solid #eef2f7; border-radius:10px; padding:12px; background:#fff; }
+    .guide-row strong { display:block; font-size:13px; color:#111827; margin-top:6px; }
+    .guide-row span { font-size:12px; color:#6b7280; }
+    .rule-list { display:grid; gap:8px; margin-top:10px; }
+    .rule-list div { font-size:12px; color:#4b5563; line-height:1.55; padding-left:14px; position:relative; }
+    .rule-list div::before { content:'•'; position:absolute; left:0; color:#693BF2; }
+    .form-footer { display:flex; justify-content:space-between; align-items:center; max-width:780px; margin-top:20px; gap:12px; }
+    .sort-card ul { list-style:none; display:grid; gap:10px; }
+    .sort-item { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px; border:1px solid #e5e7eb; border-radius:10px; background:#fafbfc; }
+    .sort-meta strong { display:block; font-size:13px; color:#111827; margin-bottom:4px; }
+    .sort-meta span { font-size:12px; color:#6b7280; }
+    .sort-handle { width:38px; min-width:38px; padding:0; background:#fff; border:1px solid #d1d5db; color:#6b7280; font-weight:700; }
+    @media (max-width: 1180px) {
+      .form-shell { grid-template-columns:1fr; }
+      .form-footer { max-width:none; }
+    }
+    @media (max-width: 860px) {
+      body { display:block; }
+      .sidebar { position:static; width:100%; height:auto; }
+      .main { margin-left:0; }
+      .ff-grid { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">
+      <div class="logo-icon">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <circle cx="11" cy="9" r="5" stroke="white" stroke-width="2"></circle>
+          <path d="M3 20c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="white" stroke-width="2" stroke-linecap="round"></path>
+        </svg>
+      </div>
+      <span>Soomgo</span>
+    </div>
+    <div class="topbar-btns">
+      <button>☰</button>
+      <button>⏎</button>
+    </div>
+  </header>
+
+  <nav class="sidebar">
+    <div class="sidebar-user">
+      <div class="user-avatar">S</div>
+      <div class="user-team">Product 팀</div>
+      <div class="user-name">Shayne Kim</div>
+      <div class="user-email">shayne@soomgo.com</div>
+      <div class="user-role">Manager</div>
+    </div>
+    <div>
+      <div class="menu-item"><span class="icon">⊞</span>대시보드</div>
+      <div class="menu-item"><span class="icon">👤</span>회원관리</div>
+      <div class="menu-item"><span class="icon">🪙</span>숨고캐시 관리</div>
+      <div class="menu-item"><span class="icon">📢</span>마케팅/SEO 관리</div>
+      <div class="menu-group-toggle"><span class="icon">🏠</span>고수 홈 관리 ▾</div>
+      <div class="menu-sub">
+        <div class="menu-item" data-menu="notice">고수 홈 공지 관리</div>
+        <div class="menu-item" data-menu="banner">고수 홈 배너 관리</div>
+        <div class="menu-item active-sub" data-menu="guide" onclick="showGuideList()">고수 홈 성공 가이드 관리</div>
+        <div class="menu-item" data-menu="analysis">고수 홈 성과 분석 관리</div>
+      </div>
+      <div class="menu-item"><span class="icon">⚙</span>관리</div>
+    </div>
+  </nav>
+
+  <main class="main" id="main-area"></main>
+
+  <script>
+    const guideRows = [
+      { no: 14, name: '4월 리뷰 응답 가이드', title: '리뷰 요청으로 재구매 높이기', start: '2026-04-01 00:00', end: '2026-04-30 23:59', status: '진행 중', active: true, label: '필수', updated: '2026-03-31 14:20', editor: 'Shayne Kim', editable: false },
+      { no: 13, name: '프로필 완성 체크리스트', title: '프로필만 바꿔도 문의가 늘어요', start: '2026-04-05 00:00', end: '2026-05-12 23:59', status: '대기', active: false, label: '가이드', updated: '2026-03-30 18:05', editor: 'Rose Kwak', editable: true },
+      { no: 12, name: '견적 전환 노하우', title: '응답 속도로 첫 고용 만들기', start: '2026-03-01 00:00', end: '2026-03-20 23:59', status: '종료', active: false, label: '노하우', updated: '2026-03-20 09:48', editor: 'Hee Choi', editable: true },
+      { no: 11, name: '세금계산서 가이드', title: '정산 전에 꼭 봐야 할 체크포인트', start: '2026-04-07 00:00', end: '2026-04-28 23:59', status: '대기', active: true, label: '필수', updated: '2026-03-29 11:12', editor: 'Zoe Park', editable: false }
+    ];
+
+    const sortRows = [
+      { title: '리뷰 요청으로 재구매 높이기', label: '필수', state: '활성화 On / 사용자 노출 1순위' },
+      { title: '정산 전에 꼭 봐야 할 체크포인트', label: '필수', state: '활성화 On / 사용자 노출 2순위' },
+      { title: '프로필만 바꿔도 문의가 늘어요', label: '가이드', state: '활성화 On / 사용자 노출 3순위' },
+      { title: '응답 속도로 첫 고용 만들기', label: '노하우', state: '활성화 On / 예비 4순위' }
+    ];
+
+    function setActiveMenu(key) {
+      document.querySelectorAll('.menu-sub .menu-item').forEach((el) => {
+        el.classList.toggle('active-sub', el.dataset.menu === key);
+      });
+    }
+
+    function render(html) {
+      document.getElementById('main-area').innerHTML = html;
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+
+    function statusTag(status) {
+      if (status === '진행 중') return '<span class="status s-on"><span class="dot d-on"></span>진행 중</span>';
+      if (status === '종료') return '<span class="status s-end"><span class="dot d-end"></span>종료</span>';
+      return '<span class="status s-wait"><span class="dot d-wait"></span>대기</span>';
+    }
+
+    function labelTag(label) {
+      if (label === '필수') return '<span class="label-pill label-required">필수</span>';
+      if (label === '가이드') return '<span class="label-pill label-guide">가이드</span>';
+      return '<span class="label-pill label-knowhow">노하우</span>';
+    }
+
+    function toggleTag(active) {
+      return `
+        <div class="tgl-wrap">
+          <label class="tgl">
+            <input type="checkbox" ${active ? 'checked' : ''}>
+            <div class="tgl-track"></div>
+            <div class="tgl-thumb"></div>
+          </label>
+          <span class="${active ? 'tgl-on' : 'tgl-off'}">${active ? 'On' : 'Off'}</span>
+        </div>
+      `;
+    }
+
+    function guideTableRows() {
+      return guideRows.map((row) => `
+        <tr>
+          <td>${row.no}</td>
+          <td>${row.name}</td>
+          <td>${row.title}</td>
+          <td>${row.start}</td>
+          <td>${row.end}</td>
+          <td>${statusTag(row.status)}</td>
+          <td>${toggleTag(row.active)}</td>
+          <td>${labelTag(row.label)}</td>
+          <td>${row.updated}</td>
+          <td>${row.editor}</td>
+          <td style="text-align:center">
+            ${row.editable
+              ? '<button class="act-edit" onclick="showGuideEdit()">수정</button>'
+              : '<div class="tip-wrap"><button class="act-disabled">수정</button><div class="tip">활성화 On 상태일 때는 수정 불가</div></div>'}
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function guideListView() {
+      return `
+        <div class="breadcrumb">
+          <a onclick="showGuideList()">대시보드</a><span class="breadcrumb-sep">/</span>
+          <a onclick="showGuideList()">고수 홈 관리</a><span class="breadcrumb-sep">/</span>
+          고수 홈 성공 가이드 관리
+        </div>
+        <div class="subhead">
+          <div>
+            <h1>고수 홈 성공 가이드 관리</h1>
+            <div class="subhead-copy">고수센터 하단에 노출되는 성공 가이드 운영 화면입니다. 사용자에게는 <strong>상위 3개</strong>만 노출되지만, 운영 편의를 위해 어드민에서는 <strong>최대 6개까지 활성화</strong>할 수 있게 구성했습니다.</div>
+          </div>
+        </div>
+        <div class="search-card">
+          <div class="search-row">
+            <div class="fg"><label>이름</label><input type="text" placeholder="내부 관리용 이름 검색" style="width:220px"></div>
+            <div class="fg"><label>시작일자</label><div class="date-range"><input type="text" placeholder="yyyy-mm-dd"><span class="date-sep">~</span><input type="text" placeholder="yyyy-mm-dd"></div></div>
+            <div class="fg"><label>레이블</label><select style="width:130px"><option>전체</option><option>필수</option><option>노하우</option><option>가이드</option></select></div>
+            <div class="fg"><label>활성화 여부</label><select style="width:120px"><option>전체</option><option>On</option><option>Off</option></select></div>
+          </div>
+          <div class="search-row">
+            <div class="btn-group"><button class="btn btn-reset">초기화</button><button class="btn btn-search">검색</button></div>
+          </div>
+        </div>
+        <div class="tbl-ctrl">
+          <div class="result-count">총 <strong>14개</strong> 성공 가이드</div>
+          <div class="tbl-actions">
+            <button class="btn-secondary" onclick="showSortView()">정렬 관리</button>
+            <button class="btn-primary" onclick="showGuideAdd()">+ 성공 가이드 등록</button>
+          </div>
+        </div>
+        <div class="tbl-wrap">
+          <div class="pg-row"><span>페이지당 크기</span><select><option>10</option><option>20</option><option>50</option></select><button class="pg-btn">‹</button><button class="pg-btn">›</button></div>
+          <table>
+            <thead>
+              <tr>
+                <th style="width:56px">No.</th>
+                <th style="width:150px">이름</th>
+                <th style="width:220px">타이틀</th>
+                <th style="width:136px">시작일자</th>
+                <th style="width:136px">종료일자</th>
+                <th style="width:92px">상태</th>
+                <th style="width:108px">활성화</th>
+                <th style="width:86px">레이블</th>
+                <th style="width:132px">최근 수정일자</th>
+                <th style="width:104px">최근 등록자</th>
+                <th style="width:80px; text-align:center">관리</th>
+              </tr>
+            </thead>
+            <tbody>${guideTableRows()}</tbody>
+          </table>
+          <div class="pg-row bottom"><span>페이지당 크기</span><select><option>10</option><option>20</option><option>50</option></select><button class="pg-btn">‹</button><button class="pg-btn">›</button></div>
+        </div>
+      `;
+    }
+
+    function guideFormView(mode) {
+      const isEdit = mode === 'edit';
+      return `
+        <div class="breadcrumb">
+          <a onclick="showGuideList()">대시보드</a><span class="breadcrumb-sep">/</span>
+          <a onclick="showGuideList()">고수 홈 관리</a><span class="breadcrumb-sep">/</span>
+          <a onclick="showGuideList()">고수 홈 성공 가이드 관리</a><span class="breadcrumb-sep">/</span>
+          성공 가이드 ${isEdit ? '수정' : '등록'}
+        </div>
+        <div class="subhead">
+          <div>
+            <h1>성공 가이드 ${isEdit ? '수정' : '등록'}</h1>
+            <div class="subhead-copy">PRD에서 확인된 운영 정책을 반영해 <strong>이름, 타이틀, 레이블, 게시글 랜딩, 노출 기간, 활성화 여부</strong>를 한 번에 관리할 수 있도록 구성했습니다.</div>
+          </div>
+        </div>
+        <div class="form-shell">
+          <div>
+            <div class="form-card">
+              <div class="form-card-title">기본 정보</div>
+              <div class="ff-grid">
+                <div class="ff">
+                  <label>이름 <span class="req">*</span></label>
+                  <input type="text" ${isEdit ? 'value="프로필 완성 체크리스트"' : 'placeholder="이름을 입력하세요"'}>
+                  <div class="hint">사용자에게 노출 안됩니다</div>
+                </div>
+                <div class="ff">
+                  <label>레이블 <span class="req">*</span></label>
+                  <select>
+                    <option ${isEdit ? '' : 'selected'}>필수</option>
+                    <option ${isEdit ? 'selected' : ''}>가이드</option>
+                    <option>노하우</option>
+                  </select>
+                  <div class="hint">총 3개까지만 사용자 화면에 노출됩니다
+필수 레이블은 사용자 화면에 한 개만 노출 가능합니다</div>
+                </div>
+                <div class="ff full">
+                  <label>타이틀 <span class="req">*</span></label>
+                  <input type="text" ${isEdit ? 'value="프로필만 바꿔도 문의가 늘어요"' : 'placeholder="사용자에게 노출됩니다, 이모지 사용 금지"'}>
+                  <div class="hint">띄어쓰기 포함해서 20자 이내 초과 시 말줄임처리</div>
+                </div>
+                <div class="ff">
+                  <label>게시글 랜딩 WEB <span class="req">*</span></label>
+                  <input type="text" ${isEdit ? 'value="https://soomgo.com/pro-center/guides/profile-setup"' : 'placeholder="커뮤니티에 게시된 글의 링크를 입력해 주세요"'}>
+                </div>
+                <div class="ff">
+                  <label>게시글 랜딩 APP <span class="req">*</span></label>
+                  <input type="text" ${isEdit ? 'value="soomgo://community/post/48291"' : 'placeholder="커뮤니티에 게시된 글의 링크를 입력해 주세요"'}>
+                </div>
+                <div class="ff full">
+                  <div class="hint">사용자 클릭 시 각 게시글로 이동합니다.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-card">
+              <div class="form-card-title">노출 조건</div>
+              <div class="ff-grid">
+                <div class="ff">
+                  <label>노출 시작일 <span class="req">*</span></label>
+                  <input type="text" ${isEdit ? 'value="2026-04-05 00:00"' : 'placeholder="yyyy-mm-dd hh:mm"'}>
+                  <div class="hint">활성화되어 있다면 노출 시작일에 사용자에게 자동 노출됩니다</div>
+                </div>
+                <div class="ff">
+                  <label>노출 종료일</label>
+                  <input type="text" ${isEdit ? 'value="2026-05-12 23:59"' : 'placeholder="yyyy-mm-dd hh:mm"'}>
+                  <div class="hint">미입력 시 상시노출됩니다</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="preview-card">
+              <div class="summary-title">사용자 노출 미리보기</div>
+              <div class="guide-preview">
+                <div class="guide-preview-head">
+                  ${labelTag(isEdit ? '가이드' : '필수')}
+                </div>
+                <div class="guide-preview-body">
+                  <div class="guide-row">
+                    <span>고수센터 하단 노출 카드</span>
+                    <strong>${isEdit ? '프로필만 바꿔도 문의가 늘어요' : '타이틀이 이 영역에 노출됩니다'}</strong>
+                  </div>
+                  <div class="guide-row">
+                    <span>노출 정책</span>
+                    <strong>필수 우선, 상위 3개만 사용자 화면 노출</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="stack-card">
+              <div class="mini-badge">Validation</div>
+              <div class="summary-title">등록 시 체크 포인트</div>
+              <div class="rule-list">
+                <div>필수 입력값 누락 시 등록 불가</div>
+                <div>활성화 On 상태 항목이 6개를 넘으면 등록 또는 변경 불가</div>
+                <div>노출 종료일은 노출 시작일보다 이후여야 함</div>
+                <div>사용자 화면에는 우선순위 기준 상위 3개만 노출</div>
+                <div>활성화 On 상태에서는 수정 버튼 숨김 처리</div>
+              </div>
+            </div>
+
+            <div class="stack-card">
+              <div class="summary-title">운영 메모</div>
+              <div class="summary-list">
+                <div class="summary-item"><strong>노출 위치</strong><span>보유 숨고캐시 하단, 고수센터 글 영역</span></div>
+                <div class="summary-item"><strong>레이블 정책</strong><span>필수 콘텐츠가 우선 노출되고, 그 안에서는 우선순위가 높은 콘텐츠가 먼저 노출됩니다.</span></div>
+                <div class="summary-item"><strong>권한</strong><span>CSOutsourcingManager, CSOutsourcingEmployee 제외 기준을 반영했습니다.</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-footer">
+          <button class="btn-back" onclick="showGuideList()">목록으로</button>
+          <button class="btn-save">${isEdit ? '수정완료' : '등록완료'}</button>
+        </div>
+      `;
+    }
+
+    function sortView() {
+      return `
+        <div class="breadcrumb">
+          <a onclick="showGuideList()">대시보드</a><span class="breadcrumb-sep">/</span>
+          <a onclick="showGuideList()">고수 홈 관리</a><span class="breadcrumb-sep">/</span>
+          <a onclick="showGuideList()">고수 홈 성공 가이드 관리</a><span class="breadcrumb-sep">/</span>
+          정렬 관리
+        </div>
+        <div class="subhead">
+          <div>
+            <h1>성공 가이드 정렬 관리</h1>
+            <div class="subhead-copy">PRD 기준으로 <strong>활성화된 항목만</strong> 정렬 대상에 포함했습니다. 저장하기는 순서 변경이 있을 때 활성화되는 구조를 상정했습니다.</div>
+          </div>
+        </div>
+        <div class="info-banner">상위 3개까지 사용자 화면에 노출됩니다. 필수 콘텐츠가 포함되어 있으면 항상 먼저 노출되며, 필수끼리는 현재 정렬 순서를 따릅니다.</div>
+        <div class="sort-card">
+          <div class="summary-title">활성화된 성공 가이드</div>
+          <ul>
+            ${sortRows.map((row) => `
+              <li class="sort-item">
+                <div class="sort-meta">
+                  <strong>${row.title}</strong>
+                  <span>${row.label} · ${row.state}</span>
+                </div>
+                <div class="action-row">
+                  <button class="sort-handle">↑</button>
+                  <button class="sort-handle">↓</button>
+                </div>
+              </li>
+            `).join('')}
+          </ul>
+          <div class="form-footer" style="max-width:none; margin-top:18px;">
+            <button class="btn-back" onclick="showGuideList()">취소</button>
+            <button class="btn-save">저장하기</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function showGuideList() {
+      setActiveMenu('guide');
+      render(guideListView());
+    }
+
+    function showGuideAdd() {
+      setActiveMenu('guide');
+      render(guideFormView('add'));
+    }
+
+    function showGuideEdit() {
+      setActiveMenu('guide');
+      render(guideFormView('edit'));
+    }
+
+    function showSortView() {
+      setActiveMenu('guide');
+      render(sortView());
+    }
+
+    showGuideList();
+  </script>
+</body>
+</html>
