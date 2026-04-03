@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title> 고용 관리 - 김세연 </title>
+    <title>회원조회 - 김세연</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -455,6 +455,10 @@
         position: relative;
       }
 
+      .dropdown {
+        position: relative;
+      }
+
       .label {
         display: block;
         margin: 0 0 5px 10px;
@@ -483,6 +487,57 @@
         background-image: none;
       }
 
+      .select-display {
+        width: 100%;
+        height: 40px;
+        padding: 0 36px 0 12px;
+        border: 1px solid #d8deea;
+        border-radius: 10px;
+        background: #fff;
+        color: #313849;
+        font-size: 14px;
+        text-align: left;
+        font-family: inherit;
+      }
+
+      .dropdown-menu {
+        position: absolute;
+        top: calc(100% + 6px);
+        left: 0;
+        right: 0;
+        padding: 6px;
+        border: 1px solid #d8deea;
+        border-radius: 12px;
+        background: #fff;
+        box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+        display: none;
+        z-index: 20;
+      }
+
+      .dropdown.open .dropdown-menu {
+        display: block;
+      }
+
+      .dropdown-option {
+        width: 100%;
+        min-height: 34px;
+        padding: 0 10px;
+        border: 0;
+        border-radius: 8px;
+        background: transparent;
+        color: #445065;
+        font-size: 13px;
+        font-weight: 700;
+        text-align: left;
+        font-family: inherit;
+      }
+
+      .dropdown-option:hover,
+      .dropdown-option.active {
+        background: #f3f1ff;
+        color: var(--primary);
+      }
+
       .icon-right {
         position: absolute;
         right: 12px;
@@ -497,6 +552,22 @@
         grid-template-columns: minmax(0, 1fr) 16px minmax(0, 1fr);
         gap: 8px;
         align-items: center;
+      }
+
+      .date-field {
+        position: relative;
+        min-width: 0;
+      }
+
+      .date-field .input {
+        padding-right: 34px;
+      }
+
+      .date-field .icon-right {
+        right: 12px;
+        top: 12px;
+        width: 16px;
+        height: 16px;
       }
 
       .date-sep {
@@ -644,6 +715,37 @@
         color: #738096;
       }
 
+      .type-pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 30px;
+        padding: 0 12px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 800;
+        white-space: nowrap;
+      }
+
+      .type-pill.pay {
+        background: #eef4ff;
+        color: #3967dd;
+      }
+
+      .type-pill.review {
+        background: #ebfaf2;
+        color: #1b9a5c;
+      }
+
+      .type-pill.hire {
+        background: #f1efff;
+        color: var(--primary);
+      }
+
+      .type-pill.none {
+        background: #f1f2f5;
+        color: #738096;
+      }
+
       .history-btn {
         min-width: 92px;
         height: 38px;
@@ -654,6 +756,34 @@
         font-size: 14px;
         font-weight: 800;
         font-family: inherit;
+      }
+
+      .row-actions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .action-btn {
+        min-width: 82px;
+        height: 38px;
+        padding: 0 12px;
+        border-radius: 10px;
+        font-family: inherit;
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .action-btn.confirm {
+        border: 0;
+        background: var(--primary);
+        color: #fff;
+      }
+
+      .action-btn.cancel {
+        border: 1px solid #d7dceb;
+        background: #fff;
+        color: #5d6679;
       }
 
       .modal-backdrop {
@@ -748,11 +878,24 @@
         background: #fff;
       }
 
+      .history-head,
       .history-row {
         display: grid;
-        grid-template-columns: 150px 118px minmax(0, 1fr);
+        grid-template-columns: 150px 118px minmax(0, 1fr) 120px;
         gap: 12px;
         align-items: center;
+      }
+
+      .history-head {
+        padding: 10px 14px;
+        background: #fafbff;
+        border-bottom: 1px solid #edf1f7;
+        color: #6f788b;
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .history-row {
         padding: 12px 14px;
         border-bottom: 1px solid #edf1f7;
       }
@@ -776,6 +919,33 @@
         color: #2e3545;
         font-size: 13px;
         font-weight: 700;
+      }
+
+      .history-confirm {
+        display: inline-flex;
+        align-items: center;
+      }
+
+      .history-yn {
+        min-width: 34px;
+        height: 26px;
+        padding: 0 8px;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .history-yn.y {
+        background: #f1efff;
+        color: var(--primary);
+      }
+
+      .history-yn.n {
+        background: #f1f2f5;
+        color: #738096;
       }
 
       .event-badge {
@@ -1057,18 +1227,23 @@
                     <input class="input ghost-text" value="고객 User ID 입력" />
                   </div>
 
-                  <div class="field">
+                  <div class="field dropdown" id="hireStatusDropdown">
                     <label class="label">고용 여부</label>
-                    <input class="input ghost-text select-input" value="전체" />
+                    <button class="select-display" id="hireStatusButton" type="button" aria-haspopup="listbox" aria-expanded="false">전체</button>
                     <svg class="icon-right" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                       <path d="M5 7l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
+                    <div class="dropdown-menu" id="hireStatusMenu" role="listbox" aria-label="고용 여부 선택">
+                      <button class="dropdown-option active" type="button" data-value="전체">전체</button>
+                      <button class="dropdown-option" type="button" data-value="Y">Y</button>
+                      <button class="dropdown-option" type="button" data-value="N">N</button>
+                    </div>
                   </div>
 
                   <div class="field wide">
                     <label class="label">채팅방 생성 일자</label>
                     <div class="date-range">
-                      <div class="field">
+                      <div class="date-field">
                         <input class="input ghost-text" value="연도. 월. 일. -- --:--" />
                         <svg class="icon-right" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                           <rect x="3" y="4" width="14" height="13" rx="1.8" stroke="currentColor" stroke-width="1.8" />
@@ -1076,7 +1251,7 @@
                         </svg>
                       </div>
                       <div class="date-sep">~</div>
-                      <div class="field">
+                      <div class="date-field">
                         <input class="input ghost-text" value="연도. 월. 일. -- --:--" />
                         <svg class="icon-right" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                           <rect x="3" y="4" width="14" height="13" rx="1.8" stroke="currentColor" stroke-width="1.8" />
@@ -1089,7 +1264,7 @@
                   <div class="field wide">
                     <label class="label">고용 생성 일자</label>
                     <div class="date-range">
-                      <div class="field">
+                      <div class="date-field">
                         <input class="input ghost-text" value="연도. 월. 일. -- --:--" />
                         <svg class="icon-right" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                           <rect x="3" y="4" width="14" height="13" rx="1.8" stroke="currentColor" stroke-width="1.8" />
@@ -1097,7 +1272,7 @@
                         </svg>
                       </div>
                       <div class="date-sep">~</div>
-                      <div class="field">
+                      <div class="date-field">
                         <input class="input ghost-text" value="연도. 월. 일. -- --:--" />
                         <svg class="icon-right" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                           <rect x="3" y="4" width="14" height="13" rx="1.8" stroke="currentColor" stroke-width="1.8" />
@@ -1129,11 +1304,12 @@
                       <th>채팅방 ID</th>
                       <th>고객 User ID</th>
                       <th>고객 이름</th>
-                      <th>고용 여부</th>
+                      <th>고용 유형</th>
                       <th>고용 확정 여부</th>
                       <th>인터렉 리뷰 여부</th>
                       <th>숨고페이 여부</th>
                       <th>고용 history</th>
+                      <th>고용 액션</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -1141,81 +1317,89 @@
                       <td><a class="chat-id" href="chat-detail-admin.html?chat=9001001">9001001</a></td>
                       <td><a class="user-id" href="customer-member-detail.html?user=1867793">1867793</a></td>
                       <td>김세연</td>
-                      <td><span class="status-pill y">Y</span></td>
+                      <td><span class="type-pill pay">숨고페이</span></td>
                       <td><span class="status-pill y">Y</span></td>
                       <td><span class="status-pill y">Y</span></td>
                       <td><span class="status-pill n">N</span></td>
                       <td><button class="history-btn" type="button" data-chat-id="9001001" data-user-id="1867793" data-user-name="김세연">history</button></td>
+                      <td><div class="row-actions"><button class="action-btn confirm" type="button">고용 확정</button><button class="action-btn cancel" type="button">고용 취소</button></div></td>
                     </tr>
                     <tr>
                       <td><a class="chat-id" href="chat-detail-admin.html?chat=9001002">9001002</a></td>
                       <td><a class="user-id" href="customer-member-detail.html?user=1867793">1867793</a></td>
                       <td>김세연</td>
-                      <td><span class="status-pill y">Y</span></td>
+                      <td><span class="type-pill review">인터렉 리뷰</span></td>
                       <td><span class="status-pill n">N</span></td>
                       <td><span class="status-pill n">N</span></td>
                       <td><span class="status-pill n">N</span></td>
                       <td><button class="history-btn" type="button" data-chat-id="9001002" data-user-id="1867793" data-user-name="김세연">history</button></td>
+                      <td><div class="row-actions"><button class="action-btn confirm" type="button">고용 확정</button><button class="action-btn cancel" type="button">고용 취소</button></div></td>
                     </tr>
                     <tr>
                       <td><a class="chat-id" href="chat-detail-admin.html?chat=9001003">9001003</a></td>
                       <td><a class="user-id" href="customer-member-detail.html?user=2045812">2045812</a></td>
                       <td>이준호</td>
-                      <td><span class="status-pill y">Y</span></td>
+                      <td><span class="type-pill hire">고용 확정</span></td>
                       <td><span class="status-pill y">Y</span></td>
                       <td><span class="status-pill n">N</span></td>
                       <td><span class="status-pill y">Y</span></td>
                       <td><button class="history-btn" type="button" data-chat-id="9001003" data-user-id="2045812" data-user-name="이준호">history</button></td>
+                      <td><div class="row-actions"><button class="action-btn confirm" type="button">고용 확정</button><button class="action-btn cancel" type="button">고용 취소</button></div></td>
                     </tr>
                     <tr>
                       <td><a class="chat-id" href="chat-detail-admin.html?chat=9001004">9001004</a></td>
                       <td><a class="user-id" href="customer-member-detail.html?user=2045812">2045812</a></td>
                       <td>이준호</td>
-                      <td><span class="status-pill n">N</span></td>
+                      <td><span class="type-pill none">N</span></td>
                       <td><span class="status-pill n">N</span></td>
                       <td><span class="status-pill n">N</span></td>
                       <td><span class="status-pill n">N</span></td>
                       <td><button class="history-btn" type="button" data-chat-id="9001004" data-user-id="2045812" data-user-name="이준호">history</button></td>
+                      <td><div class="row-actions"><button class="action-btn confirm" type="button">고용 확정</button><button class="action-btn cancel" type="button">고용 취소</button></div></td>
                     </tr>
                     <tr>
                       <td><a class="chat-id" href="chat-detail-admin.html?chat=9001005">9001005</a></td>
                       <td><a class="user-id" href="customer-member-detail.html?user=3198274">3198274</a></td>
                       <td>박지영</td>
-                      <td><span class="status-pill y">Y</span></td>
+                      <td><span class="type-pill pay">숨고페이</span></td>
                       <td><span class="status-pill y">Y</span></td>
                       <td><span class="status-pill y">Y</span></td>
                       <td><span class="status-pill n">N</span></td>
                       <td><button class="history-btn" type="button" data-chat-id="9001005" data-user-id="3198274" data-user-name="박지영">history</button></td>
+                      <td><div class="row-actions"><button class="action-btn confirm" type="button">고용 확정</button><button class="action-btn cancel" type="button">고용 취소</button></div></td>
                     </tr>
                     <tr>
                       <td><a class="chat-id" href="chat-detail-admin.html?chat=9001006">9001006</a></td>
                       <td><a class="user-id" href="customer-member-detail.html?user=3198274">3198274</a></td>
                       <td>박지영</td>
-                      <td><span class="status-pill n">N</span></td>
+                      <td><span class="type-pill none">N</span></td>
                       <td><span class="status-pill n">N</span></td>
                       <td><span class="status-pill n">N</span></td>
                       <td><span class="status-pill n">N</span></td>
                       <td><button class="history-btn" type="button" data-chat-id="9001006" data-user-id="3198274" data-user-name="박지영">history</button></td>
+                      <td><div class="row-actions"><button class="action-btn confirm" type="button">고용 확정</button><button class="action-btn cancel" type="button">고용 취소</button></div></td>
                     </tr>
                     <tr>
                       <td><a class="chat-id" href="chat-detail-admin.html?chat=9001007">9001007</a></td>
                       <td><a class="user-id" href="customer-member-detail.html?user=4302156">4302156</a></td>
                       <td>최민준</td>
-                      <td><span class="status-pill y">Y</span></td>
+                      <td><span class="type-pill hire">고용 확정</span></td>
                       <td><span class="status-pill n">N</span></td>
                       <td><span class="status-pill n">N</span></td>
                       <td><span class="status-pill y">Y</span></td>
                       <td><button class="history-btn" type="button" data-chat-id="9001007" data-user-id="4302156" data-user-name="최민준">history</button></td>
+                      <td><div class="row-actions"><button class="action-btn confirm" type="button">고용 확정</button><button class="action-btn cancel" type="button">고용 취소</button></div></td>
                     </tr>
                     <tr>
                       <td><a class="chat-id" href="chat-detail-admin.html?chat=9001008">9001008</a></td>
                       <td><a class="user-id" href="customer-member-detail.html?user=5417839">5417839</a></td>
                       <td>정수빈</td>
-                      <td><span class="status-pill n">N</span></td>
+                      <td><span class="type-pill none">N</span></td>
                       <td><span class="status-pill n">N</span></td>
                       <td><span class="status-pill n">N</span></td>
                       <td><span class="status-pill n">N</span></td>
                       <td><button class="history-btn" type="button" data-chat-id="9001008" data-user-id="5417839" data-user-name="정수빈">history</button></td>
+                      <td><div class="row-actions"><button class="action-btn confirm" type="button">고용 확정</button><button class="action-btn cancel" type="button">고용 취소</button></div></td>
                     </tr>
                   </tbody>
                 </table>
@@ -1249,30 +1433,41 @@
           <div class="history-section">
             <div class="history-section-title">히스토리 목록</div>
             <div class="history-feed">
-              <div class="history-row">
-                <div class="history-time">26.3.26(목) 11:09</div>
-                <div class="history-type"><span class="event-badge payment">숨고페이</span></div>
-                <div class="history-text">결제 완료</div>
-              </div>
-              <div class="history-row">
-                <div class="history-time">26.3.26(목) 11:11</div>
-                <div class="history-type"><span class="event-badge payment">숨고페이</span></div>
-                <div class="history-text">결제 취소 요청</div>
-              </div>
-              <div class="history-row">
-                <div class="history-time">26.3.26(목) 12:09</div>
-                <div class="history-type"><span class="event-badge hire">고용 flow</span></div>
-                <div class="history-text">고용 확정</div>
-              </div>
-              <div class="history-row">
-                <div class="history-time">26.3.26(목) 13:09</div>
-                <div class="history-type"><span class="event-badge hire">고용 flow</span></div>
-                <div class="history-text">고용 취소</div>
+              <div class="history-head">
+                <div>일시</div>
+                <div>유형</div>
+                <div>상태</div>
+                <div>고용 확정 여부</div>
               </div>
               <div class="history-row">
                 <div class="history-time">26.3.31(화) 13:09</div>
                 <div class="history-type"><span class="event-badge review">인터렉 리뷰</span></div>
                 <div class="history-text">리뷰 작성 완료</div>
+                <div class="history-confirm"><span class="history-yn y">Y</span></div>
+              </div>
+              <div class="history-row">
+                <div class="history-time">26.3.26(목) 13:09</div>
+                <div class="history-type"><span class="event-badge hire">고용 flow</span></div>
+                <div class="history-text">고용 취소</div>
+                <div class="history-confirm"><span class="history-yn n">N</span></div>
+              </div>
+              <div class="history-row">
+                <div class="history-time">26.3.26(목) 12:09</div>
+                <div class="history-type"><span class="event-badge hire">고용 flow</span></div>
+                <div class="history-text">고용 확정</div>
+                <div class="history-confirm"><span class="history-yn y">Y</span></div>
+              </div>
+              <div class="history-row">
+                <div class="history-time">26.3.26(목) 11:11</div>
+                <div class="history-type"><span class="event-badge payment">숨고페이</span></div>
+                <div class="history-text">결제 취소 요청</div>
+                <div class="history-confirm"><span class="history-yn n">N</span></div>
+              </div>
+              <div class="history-row">
+                <div class="history-time">26.3.26(목) 11:09</div>
+                <div class="history-type"><span class="event-badge payment">숨고페이</span></div>
+                <div class="history-text">결제 완료</div>
+                <div class="history-confirm"><span class="history-yn y">Y</span></div>
               </div>
             </div>
           </div>
@@ -1284,10 +1479,29 @@
       const searchButton = document.getElementById("searchButton");
       const resetButton = document.getElementById("resetButton");
       const resultsCard = document.getElementById("resultsCard");
+      const hireStatusDropdown = document.getElementById("hireStatusDropdown");
+      const hireStatusButton = document.getElementById("hireStatusButton");
+      const hireStatusMenu = document.getElementById("hireStatusMenu");
+      const hireStatusOptions = hireStatusMenu.querySelectorAll(".dropdown-option");
       const historyModalBackdrop = document.getElementById("historyModalBackdrop");
       const historyModalClose = document.getElementById("historyModalClose");
       const historyModalMeta = document.getElementById("historyModalMeta");
       const historyButtons = document.querySelectorAll(".history-btn");
+
+      hireStatusButton.addEventListener("click", () => {
+        const isOpen = hireStatusDropdown.classList.toggle("open");
+        hireStatusButton.setAttribute("aria-expanded", String(isOpen));
+      });
+
+      hireStatusOptions.forEach((option) => {
+        option.addEventListener("click", () => {
+          hireStatusButton.textContent = option.dataset.value;
+          hireStatusOptions.forEach((item) => item.classList.remove("active"));
+          option.classList.add("active");
+          hireStatusDropdown.classList.remove("open");
+          hireStatusButton.setAttribute("aria-expanded", "false");
+        });
+      });
 
       searchButton.addEventListener("click", () => {
         resultsCard.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -1317,7 +1531,16 @@
 
       window.addEventListener("keydown", (event) => {
         if (event.key === "Escape") {
+          hireStatusDropdown.classList.remove("open");
+          hireStatusButton.setAttribute("aria-expanded", "false");
           historyModalBackdrop.classList.remove("open");
+        }
+      });
+
+      document.addEventListener("click", (event) => {
+        if (!hireStatusDropdown.contains(event.target)) {
+          hireStatusDropdown.classList.remove("open");
+          hireStatusButton.setAttribute("aria-expanded", "false");
         }
       });
     </script>
