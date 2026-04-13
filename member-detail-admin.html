@@ -611,16 +611,11 @@
       }
 
       .date-filter-block {
-        transition: opacity 0.18s ease;
+        display: none;
       }
 
-      .date-filter-block.inactive {
-        opacity: 0.48;
-      }
-
-      .date-filter-block.inactive .input,
-      .date-filter-block.inactive .icon-right {
-        pointer-events: none;
+      .date-filter-block.active {
+        display: block;
       }
 
       .date-field {
@@ -1729,7 +1724,6 @@
         dateFilterBlocks.forEach((block) => {
           const isActive = block.dataset.dateMode === selectedMode;
           block.classList.toggle("active", isActive);
-          block.classList.toggle("inactive", !isActive);
 
           block.querySelectorAll(".input").forEach((input) => {
             input.disabled = !isActive;
