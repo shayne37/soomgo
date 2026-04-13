@@ -440,60 +440,74 @@
         margin: 14px 0 16px;
       }
 
-      .date-mode-grid {
-        display: inline-flex;
+      .search-form {
+        display: grid;
+        gap: 12px;
+      }
+
+      .search-row {
+        display: grid;
+        gap: 8px;
+      }
+
+      .search-row.compact {
+        max-width: 220px;
+      }
+
+      .search-mode-line {
+        display: flex;
         align-items: center;
         gap: 8px;
-        margin-bottom: 10px;
+        flex-wrap: wrap;
+      }
+
+      .search-mode-title {
+        font-size: 12px;
+        font-weight: 800;
+        color: #5f697c;
+        white-space: nowrap;
+      }
+
+      .search-mode-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
         padding: 4px;
         border: 1px solid #dfe4ef;
         border-radius: 12px;
         background: #fff;
       }
 
-      .date-mode-card {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 8px 10px;
+      .search-mode-btn {
+        min-width: 98px;
+        height: 32px;
+        padding: 0 12px;
         border: 0;
         border-radius: 8px;
         background: transparent;
-        cursor: pointer;
-      }
-
-      .date-mode-card input {
-        display: none;
-      }
-
-      .date-mode-card strong {
+        color: #667085;
         font-size: 12px;
-        color: #2d3647;
         font-weight: 800;
+        font-family: inherit;
+        white-space: nowrap;
       }
 
-      .date-mode-card span {
-        display: none;
-      }
-
-      .date-mode-card.active {
+      .search-mode-btn.active {
         background: #f3f1ff;
-        box-shadow: inset 0 0 0 1px rgba(84, 72, 229, 0.08);
-      }
-
-      .date-mode-card.active strong {
         color: var(--primary);
       }
 
-      .form-grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 14px 14px;
-        align-items: end;
+      .search-input-wrap {
+        max-width: 360px;
       }
 
-      .field.wide {
-        grid-column: span 2;
+      .date-filter-block {
+        display: none;
+        max-width: 780px;
+      }
+
+      .date-filter-block.active {
+        display: block;
       }
 
       .field {
@@ -594,17 +608,9 @@
 
       .date-range {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) 16px minmax(0, 1fr);
+        grid-template-columns: minmax(0, 1fr) 20px minmax(0, 1fr);
         gap: 8px;
         align-items: center;
-      }
-
-      .date-filter-block {
-        display: none;
-      }
-
-      .date-filter-block.active {
-        display: block;
       }
 
       .date-field {
@@ -626,7 +632,7 @@
       .date-sep {
         text-align: center;
         color: #8b93a5;
-        font-size: 14px;
+        font-size: 13px;
         font-weight: 700;
       }
 
@@ -1338,83 +1344,82 @@
 
                 <div class="search-divider"></div>
 
-                <div class="date-mode-grid">
-                  <label class="date-mode-card active" data-mode-card="chat">
-                    <input type="radio" name="dateFilterMode" value="chat" checked />
-                    <strong>채팅방 생성 일자</strong>
-                  </label>
-                  <label class="date-mode-card" data-mode-card="hire">
-                    <input type="radio" name="dateFilterMode" value="hire" />
-                    <strong>고용 생성 일자</strong>
-                  </label>
-                </div>
-
-                <div class="form-grid">
-                  <div class="field">
-                    <label class="label">채팅방 ID</label>
-                    <input class="input ghost-text select-input" value="채팅방 ID 입력" />
-                    <svg class="icon-right" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                      <path d="M7 6h6M7 10h6M7 14h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
-                      <path d="M14 5l2 2-2 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                  </div>
-
-                  <div class="field">
-                    <label class="label">상대 USER ID</label>
-                    <input class="input ghost-text" value="고객 User ID 입력" />
-                  </div>
-
-                  <div class="field dropdown" id="hireStatusDropdown">
-                    <label class="label">고용 여부</label>
-                    <button class="select-display" id="hireStatusButton" type="button" aria-haspopup="listbox" aria-expanded="false">전체</button>
-                    <svg class="icon-right" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                      <path d="M5 7l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                    <div class="dropdown-menu" id="hireStatusMenu" role="listbox" aria-label="고용 여부 선택">
-                      <button class="dropdown-option active" type="button" data-value="전체">전체</button>
-                      <button class="dropdown-option" type="button" data-value="Y">Y</button>
-                      <button class="dropdown-option" type="button" data-value="N">N</button>
-                    </div>
-                  </div>
-
-                  <div class="field wide date-filter-block active" data-date-mode="chat">
-                    <label class="label">채팅방 생성 일자</label>
-                    <div class="date-range">
-                      <div class="date-field">
-                        <input class="input ghost-text" value="연도. 월. 일. -- --:--" />
-                        <svg class="icon-right" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                          <rect x="3" y="4" width="14" height="13" rx="1.8" stroke="currentColor" stroke-width="1.8" />
-                          <path d="M6 2.8v3M14 2.8v3M3 8h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
-                        </svg>
-                      </div>
-                      <div class="date-sep">~</div>
-                      <div class="date-field">
-                        <input class="input ghost-text" value="연도. 월. 일. -- --:--" />
-                        <svg class="icon-right" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                          <rect x="3" y="4" width="14" height="13" rx="1.8" stroke="currentColor" stroke-width="1.8" />
-                          <path d="M6 2.8v3M14 2.8v3M3 8h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
-                        </svg>
+                <div class="search-form">
+                  <div class="search-row compact">
+                    <div class="field dropdown" id="hireStatusDropdown">
+                      <label class="label">고용 여부</label>
+                      <button class="select-display" id="hireStatusButton" type="button" aria-haspopup="listbox" aria-expanded="false">전체</button>
+                      <svg class="icon-right" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                        <path d="M5 7l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                      <div class="dropdown-menu" id="hireStatusMenu" role="listbox" aria-label="고용 여부 선택">
+                        <button class="dropdown-option active" type="button" data-value="전체">전체</button>
+                        <button class="dropdown-option" type="button" data-value="Y">Y</button>
+                        <button class="dropdown-option" type="button" data-value="N">N</button>
                       </div>
                     </div>
                   </div>
 
-                  <div class="field wide date-filter-block inactive" data-date-mode="hire">
-                    <label class="label">고용 생성 일자</label>
-                    <div class="date-range">
-                      <div class="date-field">
-                        <input class="input ghost-text" value="연도. 월. 일. -- --:--" disabled />
-                        <svg class="icon-right" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                          <rect x="3" y="4" width="14" height="13" rx="1.8" stroke="currentColor" stroke-width="1.8" />
-                          <path d="M6 2.8v3M14 2.8v3M3 8h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
-                        </svg>
+                  <div class="search-row">
+                    <div class="search-mode-line">
+                      <div class="search-mode-toggle" role="tablist" aria-label="ID 검색 기준">
+                        <button class="search-mode-btn active" id="idModeChatButton" type="button" data-id-mode-btn="chat">채팅방 ID</button>
+                        <button class="search-mode-btn" id="idModeUserButton" type="button" data-id-mode-btn="user">상대 User ID</button>
                       </div>
-                      <div class="date-sep">~</div>
-                      <div class="date-field">
-                        <input class="input ghost-text" value="연도. 월. 일. -- --:--" disabled />
-                        <svg class="icon-right" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                          <rect x="3" y="4" width="14" height="13" rx="1.8" stroke="currentColor" stroke-width="1.8" />
-                          <path d="M6 2.8v3M14 2.8v3M3 8h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
-                        </svg>
+                    </div>
+                    <div class="field search-input-wrap">
+                      <label class="label" id="idFilterLabel">채팅방 ID</label>
+                      <input class="input" id="idFilterInput" type="number" inputmode="numeric" placeholder="채팅방 ID를 숫자로 입력해 주세요" />
+                    </div>
+                  </div>
+
+                  <div class="search-row">
+                    <div class="search-mode-line">
+                      <div class="search-mode-toggle" role="tablist" aria-label="날짜 검색 기준">
+                        <button class="search-mode-btn active" id="dateModeHireButton" type="button" data-date-mode-btn="hire">고용 생성 일자</button>
+                        <button class="search-mode-btn" id="dateModeChatButton" type="button" data-date-mode-btn="chat">채팅방 생성 일자</button>
+                      </div>
+                    </div>
+
+                    <div class="field date-filter-block active" data-date-mode="hire">
+                      <label class="label">고용 생성 일자</label>
+                      <div class="date-range">
+                        <div class="date-field">
+                          <input class="input ghost-text" placeholder="yyyy-mm-dd hh:mm" />
+                          <svg class="icon-right" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                            <rect x="3" y="4" width="14" height="13" rx="1.8" stroke="currentColor" stroke-width="1.8" />
+                            <path d="M6 2.8v3M14 2.8v3M3 8h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                          </svg>
+                        </div>
+                        <div class="date-sep">~</div>
+                        <div class="date-field">
+                          <input class="input ghost-text" placeholder="yyyy-mm-dd hh:mm" />
+                          <svg class="icon-right" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                            <rect x="3" y="4" width="14" height="13" rx="1.8" stroke="currentColor" stroke-width="1.8" />
+                            <path d="M6 2.8v3M14 2.8v3M3 8h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="field date-filter-block" data-date-mode="chat">
+                      <label class="label">채팅방 생성 일자</label>
+                      <div class="date-range">
+                        <div class="date-field">
+                          <input class="input ghost-text" placeholder="yyyy-mm-dd hh:mm" />
+                          <svg class="icon-right" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                            <rect x="3" y="4" width="14" height="13" rx="1.8" stroke="currentColor" stroke-width="1.8" />
+                            <path d="M6 2.8v3M14 2.8v3M3 8h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                          </svg>
+                        </div>
+                        <div class="date-sep">~</div>
+                        <div class="date-field">
+                          <input class="input ghost-text" placeholder="yyyy-mm-dd hh:mm" />
+                          <svg class="icon-right" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                            <rect x="3" y="4" width="14" height="13" rx="1.8" stroke="currentColor" stroke-width="1.8" />
+                            <path d="M6 2.8v3M14 2.8v3M3 8h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                          </svg>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1642,8 +1647,10 @@
       const hireStatusButton = document.getElementById("hireStatusButton");
       const hireStatusMenu = document.getElementById("hireStatusMenu");
       const hireStatusOptions = hireStatusMenu.querySelectorAll(".dropdown-option");
-      const dateModeInputs = document.querySelectorAll('input[name="dateFilterMode"]');
-      const dateModeCards = document.querySelectorAll("[data-mode-card]");
+      const idModeButtons = document.querySelectorAll("[data-id-mode-btn]");
+      const idFilterLabel = document.getElementById("idFilterLabel");
+      const idFilterInput = document.getElementById("idFilterInput");
+      const dateModeButtons = document.querySelectorAll("[data-date-mode-btn]");
       const dateFilterBlocks = document.querySelectorAll("[data-date-mode]");
       const historyModalBackdrop = document.getElementById("historyModalBackdrop");
       const historyModalClose = document.getElementById("historyModalClose");
@@ -1701,24 +1708,41 @@
         hireStatusButton.setAttribute("aria-expanded", String(isOpen));
       });
 
+      const syncIdMode = (selectedMode) => {
+        idModeButtons.forEach((button) => {
+          button.classList.toggle("active", button.dataset.idModeBtn === selectedMode);
+        });
+
+        if (selectedMode === "user") {
+          idFilterLabel.textContent = "상대 User ID";
+          idFilterInput.placeholder = "상대 User ID를 숫자로 입력해 주세요";
+        } else {
+          idFilterLabel.textContent = "채팅방 ID";
+          idFilterInput.placeholder = "채팅방 ID를 숫자로 입력해 주세요";
+        }
+
+        idFilterInput.value = "";
+      };
+
       const syncDateMode = (selectedMode) => {
-        dateModeCards.forEach((card) => {
-          card.classList.toggle("active", card.dataset.modeCard === selectedMode);
+        dateModeButtons.forEach((button) => {
+          button.classList.toggle("active", button.dataset.dateModeBtn === selectedMode);
         });
 
         dateFilterBlocks.forEach((block) => {
-          const isActive = block.dataset.dateMode === selectedMode;
-          block.classList.toggle("active", isActive);
-
-          block.querySelectorAll(".input").forEach((input) => {
-            input.disabled = !isActive;
-          });
+          block.classList.toggle("active", block.dataset.dateMode === selectedMode);
         });
       };
 
-      dateModeInputs.forEach((input) => {
-        input.addEventListener("change", () => {
-          syncDateMode(input.value);
+      idModeButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          syncIdMode(button.dataset.idModeBtn);
+        });
+      });
+
+      dateModeButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          syncDateMode(button.dataset.dateModeBtn);
         });
       });
 
@@ -1737,6 +1761,14 @@
       });
 
       resetButton.addEventListener("click", () => {
+        hireStatusButton.textContent = "전체";
+        hireStatusOptions.forEach((item) => item.classList.remove("active"));
+        hireStatusOptions[0].classList.add("active");
+        syncIdMode("chat");
+        syncDateMode("hire");
+        document.querySelectorAll(".search-form input").forEach((input) => {
+          input.value = "";
+        });
         window.scrollTo({ top: 0, behavior: "smooth" });
       });
 
@@ -1826,7 +1858,8 @@
         }
       });
 
-      syncDateMode("chat");
+      syncIdMode("chat");
+      syncDateMode("hire");
       renderHistoryRows("9001001");
     </script>
   </body>
