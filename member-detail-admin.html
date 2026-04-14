@@ -940,9 +940,9 @@
       .history-head,
       .history-row {
         display: grid;
-        grid-template-columns: 150px 118px minmax(0, 1fr) 120px 190px;
+        grid-template-columns: 58px 160px minmax(0, 1.15fr) minmax(0, 0.9fr) minmax(0, 1fr);
         gap: 12px;
-        align-items: center;
+        align-items: start;
       }
 
       .history-head {
@@ -955,7 +955,7 @@
       }
 
       .history-row {
-        padding: 12px 14px;
+        padding: 13px 14px;
         border-bottom: 1px solid #edf1f7;
       }
 
@@ -963,55 +963,39 @@
         border-bottom: 0;
       }
 
-      .history-time {
-        color: var(--purple);
+      .history-index {
+        color: #8a93a6;
         font-size: 12px;
         font-weight: 800;
       }
 
-      .history-type {
-        display: inline-flex;
-        align-items: center;
+      .history-time {
+        color: var(--purple);
+        font-size: 12px;
+        font-weight: 800;
+        line-height: 1.55;
       }
 
       .history-text {
         color: #2e3545;
         font-size: 13px;
-        font-weight: 700;
+        font-weight: 800;
+        line-height: 1.6;
       }
 
-      .history-confirm {
-        display: inline-flex;
-        align-items: center;
+      .history-cause {
+        color: #5d6679;
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 1.6;
       }
 
       .history-reason {
         color: #5a6478;
         font-size: 12px;
         font-weight: 700;
-        word-break: keep-all;
-      }
-
-      .history-yn {
-        min-width: 34px;
-        height: 26px;
-        padding: 0 8px;
-        border-radius: 999px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 12px;
-        font-weight: 800;
-      }
-
-      .history-yn.y {
-        background: #f1efff;
-        color: var(--primary);
-      }
-
-      .history-yn.n {
-        background: #f1f2f5;
-        color: #738096;
+        line-height: 1.6;
+        word-break: break-word;
       }
 
       .reason-form {
@@ -1578,18 +1562,14 @@
         </div>
         <div class="modal-body">
           <div class="history-section">
-            <div class="history-note">시간순으로 가장 최근 변화까지 한 줄씩 확인할 수 있는 고용 history 리스트입니다.</div>
-          </div>
-
-          <div class="history-section">
-            <div class="history-section-title">히스토리 목록</div>
+            <div class="history-section-title">History 목록</div>
             <div class="history-feed">
               <div class="history-head">
-                <div>일시</div>
-                <div>유형</div>
+                <div>no.</div>
+                <div>상태 변경 일시</div>
                 <div>상태</div>
-                <div>고용 확정 여부</div>
-                <div>고용 취소 사유(어드민)</div>
+                <div>변경 원인</div>
+                <div>취소 사유(어드민)</div>
               </div>
               <div id="historyRows"></div>
             </div>
@@ -1671,11 +1651,11 @@
 
       const historyTemplates = {
         default: [
-          { time: "26.3.31(화) 13:09", typeClass: "review", typeLabel: "인터렉 리뷰", status: "리뷰 작성 완료", confirmed: "Y", adminReason: "-" },
-          { time: "26.3.26(목) 13:09", typeClass: "hire", typeLabel: "고용 flow", status: "고용 취소", confirmed: "N", adminReason: "-" },
-          { time: "26.3.26(목) 12:09", typeClass: "hire", typeLabel: "고용 flow", status: "고용 확정", confirmed: "Y", adminReason: "-" },
-          { time: "26.3.26(목) 11:11", typeClass: "payment", typeLabel: "숨고페이", status: "결제 취소 요청", confirmed: "N", adminReason: "-" },
-          { time: "26.3.26(목) 11:09", typeClass: "payment", typeLabel: "숨고페이", status: "결제 완료", confirmed: "Y", adminReason: "-" }
+          { time: "26.3.31(화) 13:09", status: "고용 확정", cause: "인터렉티브 리뷰 작성 완료", adminReason: "-" },
+          { time: "26.3.26(목) 13:09", status: "고용 취소", cause: "고용 flow 취소", adminReason: "-" },
+          { time: "26.3.26(목) 12:09", status: "고용 확정", cause: "고용 flow 확정", adminReason: "-" },
+          { time: "26.3.26(목) 11:11", status: "고용 취소", cause: "숨고페이 결제 취소", adminReason: "-" },
+          { time: "26.3.26(목) 11:09", status: "고용 확정", cause: "숨고페이 결제 완료", adminReason: "-" }
         ]
       };
 
@@ -1686,16 +1666,15 @@
         const savedReason = cancelReasonByChatId[chatId] || "-";
 
         historyRows.innerHTML = items
-          .map((item) => {
+          .map((item, index) => {
             const reason = item.status === "고용 취소" ? savedReason : "-";
-            const ynClass = item.confirmed === "Y" ? "y" : "n";
 
             return `
               <div class="history-row">
+                <div class="history-index">${index + 1}</div>
                 <div class="history-time">${item.time}</div>
-                <div class="history-type"><span class="event-badge ${item.typeClass}">${item.typeLabel}</span></div>
                 <div class="history-text">${item.status}</div>
-                <div class="history-confirm"><span class="history-yn ${ynClass}">${item.confirmed}</span></div>
+                <div class="history-cause">${item.cause}</div>
                 <div class="history-reason">${reason}</div>
               </div>
             `;
