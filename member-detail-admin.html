@@ -670,6 +670,34 @@
         overflow: hidden;
       }
 
+      .request-tabs {
+        display: inline-flex;
+        gap: 6px;
+        padding: 6px;
+        margin: 18px 0 0;
+        border: 1px solid #dfe4ef;
+        border-radius: 14px;
+        background: #fff;
+      }
+
+      .request-tab {
+        min-width: 108px;
+        height: 40px;
+        padding: 0 16px;
+        border: 0;
+        border-radius: 10px;
+        background: transparent;
+        color: #697488;
+        font-size: 14px;
+        font-weight: 800;
+        font-family: inherit;
+      }
+
+      .request-tab.active {
+        background: #f3f1ff;
+        color: var(--primary);
+      }
+
       .results-head {
         display: flex;
         align-items: center;
@@ -1348,7 +1376,7 @@
                     <div class="search-mode-line">
                       <div class="search-mode-toggle" role="tablist" aria-label="ID 검색 기준">
                         <button class="search-mode-btn active" id="idModeChatButton" type="button" data-id-mode-btn="chat">채팅방 ID</button>
-                        <button class="search-mode-btn" id="idModeUserButton" type="button" data-id-mode-btn="user">상대 User ID</button>
+                        <button class="search-mode-btn" id="idModeUserButton" type="button" data-id-mode-btn="user">User ID</button>
                       </div>
                     </div>
                     <div class="field search-input-wrap">
@@ -1415,6 +1443,11 @@
                 </div>
               </div>
 
+              <div class="request-tabs" role="radiogroup" aria-label="요청 방향 선택">
+                <button class="request-tab active" id="incomingRequestTab" type="button" role="radio" aria-checked="true" data-request-tab="incoming">받은 요청</button>
+                <button class="request-tab" id="outgoingRequestTab" type="button" role="radio" aria-checked="false" data-request-tab="outgoing">보낸 요청</button>
+              </div>
+
               <div class="card results-card" id="resultsCard">
                 <div class="results-head">
                   <div class="results-title">고용 내역</div>
@@ -1428,8 +1461,8 @@
                   <thead>
                     <tr>
                       <th>채팅방 ID</th>
-                      <th>상대 User ID</th>
-                      <th>고객 이름</th>
+                      <th id="counterpartUserIdHeader">고객 User ID</th>
+                      <th id="counterpartUserNameHeader">고객 이름</th>
                       <th>고용 확정 여부</th>
                       <th>인터렉 리뷰 여부</th>
                       <th>숨고페이 여부</th>
@@ -1615,6 +1648,9 @@
       const idFilterInput = document.getElementById("idFilterInput");
       const dateModeButtons = document.querySelectorAll("[data-date-mode-btn]");
       const dateFilterBlocks = document.querySelectorAll("[data-date-mode]");
+      const requestTabButtons = document.querySelectorAll("[data-request-tab]");
+      const counterpartUserIdHeader = document.getElementById("counterpartUserIdHeader");
+      const counterpartUserNameHeader = document.getElementById("counterpartUserNameHeader");
       const historyModalBackdrop = document.getElementById("historyModalBackdrop");
       const historyModalClose = document.getElementById("historyModalClose");
       const historyModalMeta = document.getElementById("historyModalMeta");
@@ -1680,8 +1716,8 @@
         });
 
         if (selectedMode === "user") {
-          idFilterLabel.textContent = "상대 User ID";
-          idFilterInput.placeholder = "상대 User ID를 숫자로 입력해 주세요";
+          idFilterLabel.textContent = "User ID";
+          idFilterInput.placeholder = "User ID를 숫자로 입력해 주세요";
         } else {
           idFilterLabel.textContent = "채팅방 ID";
           idFilterInput.placeholder = "채팅방 ID를 숫자로 입력해 주세요";
@@ -1700,6 +1736,22 @@
         });
       };
 
+      const syncRequestTab = (selectedTab) => {
+        requestTabButtons.forEach((button) => {
+          const isActive = button.dataset.requestTab === selectedTab;
+          button.classList.toggle("active", isActive);
+          button.setAttribute("aria-checked", String(isActive));
+        });
+
+        if (selectedTab === "incoming") {
+          counterpartUserIdHeader.textContent = "고객 User ID";
+          counterpartUserNameHeader.textContent = "고객 이름";
+        } else {
+          counterpartUserIdHeader.textContent = "고수 User ID";
+          counterpartUserNameHeader.textContent = "고수 이름";
+        }
+      };
+
       idModeButtons.forEach((button) => {
         button.addEventListener("click", () => {
           syncIdMode(button.dataset.idModeBtn);
@@ -1709,6 +1761,16 @@
       dateModeButtons.forEach((button) => {
         button.addEventListener("click", () => {
           syncDateMode(button.dataset.dateModeBtn);
+        });
+      });
+
+      requestTabButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          if (button.classList.contains("active")) {
+            return;
+          }
+
+          syncRequestTab(button.dataset.requestTab);
         });
       });
 
@@ -1848,6 +1910,7 @@
 
       syncIdMode("chat");
       syncDateMode("hire");
+      syncRequestTab("incoming");
       renderHistoryRows("9001001");
     </script>
   </body>
