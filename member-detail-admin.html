@@ -454,47 +454,8 @@
         max-width: 220px;
       }
 
-      .search-mode-line {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        flex-wrap: wrap;
-      }
-
-      .search-mode-title {
-        font-size: 12px;
-        font-weight: 800;
-        color: #5f697c;
-        white-space: nowrap;
-      }
-
-      .search-mode-toggle {
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        padding: 4px;
-        border: 1px solid #dfe4ef;
-        border-radius: 12px;
-        background: #fff;
-      }
-
-      .search-mode-btn {
-        min-width: 98px;
-        height: 32px;
-        padding: 0 12px;
-        border: 0;
-        border-radius: 8px;
-        background: transparent;
-        color: #667085;
-        font-size: 12px;
-        font-weight: 800;
-        font-family: inherit;
-        white-space: nowrap;
-      }
-
-      .search-mode-btn.active {
-        background: #f3f1ff;
-        color: var(--primary);
+      .search-select-wrap {
+        max-width: 220px;
       }
 
       .search-input-wrap {
@@ -1373,28 +1334,34 @@
                   </div>
 
                   <div class="search-row">
-                    <div class="search-mode-line">
-                      <div class="search-mode-toggle" role="tablist" aria-label="ID 검색 기준">
-                        <button class="search-mode-btn active" id="idModeChatButton" type="button" data-id-mode-btn="chat">채팅방 ID</button>
-                        <button class="search-mode-btn" id="idModeUserButton" type="button" data-id-mode-btn="user">User ID</button>
-                      </div>
+                    <div class="field search-select-wrap">
+                      <label class="label" id="idFilterLabel" for="idModeSelect">ID</label>
+                      <select class="input select-input" id="idModeSelect">
+                        <option value="chat" selected>채팅방 ID</option>
+                        <option value="user">User ID</option>
+                      </select>
+                      <svg class="icon-right" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                        <path d="M5 7l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
                     </div>
                     <div class="field search-input-wrap">
-                      <label class="label" id="idFilterLabel">채팅방 ID</label>
-                      <input class="input" id="idFilterInput" type="number" inputmode="numeric" placeholder="채팅방 ID를 숫자로 입력해 주세요" />
+                      <input class="input" id="idFilterInput" type="number" inputmode="numeric" placeholder="ID를 숫자로 입력해 주세요" />
                     </div>
                   </div>
 
                   <div class="search-row">
-                    <div class="search-mode-line">
-                      <div class="search-mode-toggle" role="tablist" aria-label="날짜 검색 기준">
-                        <button class="search-mode-btn active" id="dateModeHireButton" type="button" data-date-mode-btn="hire">고용 생성 일자</button>
-                        <button class="search-mode-btn" id="dateModeChatButton" type="button" data-date-mode-btn="chat">채팅방 생성 일자</button>
-                      </div>
+                    <div class="field search-select-wrap">
+                      <label class="label" id="dateFilterLabel" for="dateModeSelect">생성일자</label>
+                      <select class="input select-input" id="dateModeSelect">
+                        <option value="hire" selected>고용 생성일자</option>
+                        <option value="chat">채팅방 생성일자</option>
+                      </select>
+                      <svg class="icon-right" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                        <path d="M5 7l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
                     </div>
 
                     <div class="field date-filter-block active" data-date-mode="hire">
-                      <label class="label">고용 생성 일자</label>
                       <div class="date-range">
                         <div class="date-field">
                           <input class="input ghost-text" placeholder="yyyy-mm-dd hh:mm" />
@@ -1415,7 +1382,6 @@
                     </div>
 
                     <div class="field date-filter-block" data-date-mode="chat">
-                      <label class="label">채팅방 생성 일자</label>
                       <div class="date-range">
                         <div class="date-field">
                           <input class="input ghost-text" placeholder="yyyy-mm-dd hh:mm" />
@@ -1460,12 +1426,14 @@
                 <table class="results-table">
                   <thead>
                     <tr>
-                      <th>채팅방 ID</th>
+                      <th>ID</th>
+                      <th>채팅방 생성일시</th>
                       <th id="counterpartUserIdHeader">고객 User ID</th>
                       <th id="counterpartUserNameHeader">고객 이름</th>
                       <th>고용 확정 여부</th>
                       <th>인터렉 리뷰 여부</th>
                       <th>숨고페이 여부</th>
+                      <th>고용 생성일시</th>
                       <th>고용 history</th>
                       <th>고용 액션</th>
                     </tr>
@@ -1473,81 +1441,97 @@
                   <tbody>
                     <tr>
                       <td><a class="chat-id" href="chat-detail-admin.html?chat=9001001">9001001</a></td>
+                      <td>2026-03-26 11:03:18</td>
                       <td><a class="user-id" href="customer-member-detail.html?user=1867793">1867793</a></td>
                       <td>김세연</td>
                       <td><span class="status-pill n">N</span></td>
                       <td><span class="status-pill y">Y</span></td>
                       <td><span class="status-pill y">Y</span></td>
+                      <td>2026-03-26 11:09:00</td>
                       <td><button class="history-btn" type="button" data-chat-id="9001001" data-user-id="1867793" data-user-name="김세연">history</button></td>
                       <td><div class="row-actions"><button class="action-btn confirm" type="button">고용 확정</button><button class="action-btn cancel" type="button" data-chat-id="9001001" data-user-id="1867793" data-user-name="김세연">고용 취소</button></div></td>
                     </tr>
                     <tr>
                       <td><a class="chat-id" href="chat-detail-admin.html?chat=9001002">9001002</a></td>
+                      <td>2026-03-26 11:42:07</td>
                       <td><a class="user-id" href="customer-member-detail.html?user=1867793">1867793</a></td>
                       <td>김세연</td>
                       <td><span class="status-pill y">Y</span></td>
                       <td><span class="status-pill n">N</span></td>
                       <td><span class="status-pill n">N</span></td>
+                      <td>2026-03-26 12:09:00</td>
                       <td><button class="history-btn" type="button" data-chat-id="9001002" data-user-id="1867793" data-user-name="김세연">history</button></td>
                       <td><div class="row-actions"><button class="action-btn confirm" type="button">고용 확정</button><button class="action-btn cancel" type="button" data-chat-id="9001002" data-user-id="1867793" data-user-name="김세연">고용 취소</button></div></td>
                     </tr>
                     <tr>
                       <td><a class="chat-id" href="chat-detail-admin.html?chat=9001003">9001003</a></td>
+                      <td>2026-03-27 09:14:22</td>
                       <td><a class="user-id" href="customer-member-detail.html?user=2045812">2045812</a></td>
                       <td>이준호</td>
                       <td><span class="status-pill y">Y</span></td>
                       <td><span class="status-pill n">N</span></td>
                       <td><span class="status-pill y">Y</span></td>
+                      <td>2026-03-27 09:55:00</td>
                       <td><button class="history-btn" type="button" data-chat-id="9001003" data-user-id="2045812" data-user-name="이준호">history</button></td>
                       <td><div class="row-actions"><button class="action-btn confirm" type="button">고용 확정</button><button class="action-btn cancel" type="button" data-chat-id="9001003" data-user-id="2045812" data-user-name="이준호">고용 취소</button></div></td>
                     </tr>
                     <tr>
                       <td><a class="chat-id" href="chat-detail-admin.html?chat=9001004">9001004</a></td>
+                      <td>2026-03-27 14:08:49</td>
                       <td><a class="user-id" href="customer-member-detail.html?user=2045812">2045812</a></td>
                       <td>이준호</td>
                       <td><span class="status-pill n">N</span></td>
                       <td><span class="status-pill n">N</span></td>
                       <td><span class="status-pill n">N</span></td>
+                      <td>-</td>
                       <td><button class="history-btn" type="button" data-chat-id="9001004" data-user-id="2045812" data-user-name="이준호">history</button></td>
                       <td><div class="row-actions"><button class="action-btn confirm" type="button">고용 확정</button><button class="action-btn cancel" type="button" data-chat-id="9001004" data-user-id="2045812" data-user-name="이준호">고용 취소</button></div></td>
                     </tr>
                     <tr>
                       <td><a class="chat-id" href="chat-detail-admin.html?chat=9001005">9001005</a></td>
+                      <td>2026-03-28 10:21:35</td>
                       <td><a class="user-id" href="customer-member-detail.html?user=3198274">3198274</a></td>
                       <td>박지영</td>
                       <td><span class="status-pill y">Y</span></td>
                       <td><span class="status-pill y">Y</span></td>
                       <td><span class="status-pill n">N</span></td>
+                      <td>2026-03-28 10:43:00</td>
                       <td><button class="history-btn" type="button" data-chat-id="9001005" data-user-id="3198274" data-user-name="박지영">history</button></td>
                       <td><div class="row-actions"><button class="action-btn confirm" type="button">고용 확정</button><button class="action-btn cancel" type="button" data-chat-id="9001005" data-user-id="3198274" data-user-name="박지영">고용 취소</button></div></td>
                     </tr>
                     <tr>
                       <td><a class="chat-id" href="chat-detail-admin.html?chat=9001006">9001006</a></td>
+                      <td>2026-03-28 16:04:58</td>
                       <td><a class="user-id" href="customer-member-detail.html?user=3198274">3198274</a></td>
                       <td>박지영</td>
                       <td><span class="status-pill n">N</span></td>
                       <td><span class="status-pill n">N</span></td>
                       <td><span class="status-pill n">N</span></td>
+                      <td>-</td>
                       <td><button class="history-btn" type="button" data-chat-id="9001006" data-user-id="3198274" data-user-name="박지영">history</button></td>
                       <td><div class="row-actions"><button class="action-btn confirm" type="button">고용 확정</button><button class="action-btn cancel" type="button" data-chat-id="9001006" data-user-id="3198274" data-user-name="박지영">고용 취소</button></div></td>
                     </tr>
                     <tr>
                       <td><a class="chat-id" href="chat-detail-admin.html?chat=9001007">9001007</a></td>
+                      <td>2026-03-29 08:33:11</td>
                       <td><a class="user-id" href="customer-member-detail.html?user=4302156">4302156</a></td>
                       <td>최민준</td>
                       <td><span class="status-pill n">N</span></td>
                       <td><span class="status-pill n">N</span></td>
                       <td><span class="status-pill y">Y</span></td>
+                      <td>-</td>
                       <td><button class="history-btn" type="button" data-chat-id="9001007" data-user-id="4302156" data-user-name="최민준">history</button></td>
                       <td><div class="row-actions"><button class="action-btn confirm" type="button">고용 확정</button><button class="action-btn cancel" type="button" data-chat-id="9001007" data-user-id="4302156" data-user-name="최민준">고용 취소</button></div></td>
                     </tr>
                     <tr>
                       <td><a class="chat-id" href="chat-detail-admin.html?chat=9001008">9001008</a></td>
+                      <td>2026-03-29 17:26:44</td>
                       <td><a class="user-id" href="customer-member-detail.html?user=5417839">5417839</a></td>
                       <td>정수빈</td>
                       <td><span class="status-pill n">N</span></td>
                       <td><span class="status-pill n">N</span></td>
                       <td><span class="status-pill n">N</span></td>
+                      <td>-</td>
                       <td><button class="history-btn" type="button" data-chat-id="9001008" data-user-id="5417839" data-user-name="정수빈">history</button></td>
                       <td><div class="row-actions"><button class="action-btn confirm" type="button">고용 확정</button><button class="action-btn cancel" type="button" data-chat-id="9001008" data-user-id="5417839" data-user-name="정수빈">고용 취소</button></div></td>
                     </tr>
@@ -1643,10 +1627,11 @@
       const hireStatusButton = document.getElementById("hireStatusButton");
       const hireStatusMenu = document.getElementById("hireStatusMenu");
       const hireStatusOptions = hireStatusMenu.querySelectorAll(".dropdown-option");
-      const idModeButtons = document.querySelectorAll("[data-id-mode-btn]");
+      const idModeSelect = document.getElementById("idModeSelect");
       const idFilterLabel = document.getElementById("idFilterLabel");
       const idFilterInput = document.getElementById("idFilterInput");
-      const dateModeButtons = document.querySelectorAll("[data-date-mode-btn]");
+      const dateModeSelect = document.getElementById("dateModeSelect");
+      const dateFilterLabel = document.getElementById("dateFilterLabel");
       const dateFilterBlocks = document.querySelectorAll("[data-date-mode]");
       const requestTabButtons = document.querySelectorAll("[data-request-tab]");
       const counterpartUserIdHeader = document.getElementById("counterpartUserIdHeader");
@@ -1711,25 +1696,22 @@
       });
 
       const syncIdMode = (selectedMode) => {
-        idModeButtons.forEach((button) => {
-          button.classList.toggle("active", button.dataset.idModeBtn === selectedMode);
-        });
+        idModeSelect.value = selectedMode;
 
         if (selectedMode === "user") {
           idFilterLabel.textContent = "User ID";
           idFilterInput.placeholder = "User ID를 숫자로 입력해 주세요";
         } else {
-          idFilterLabel.textContent = "채팅방 ID";
-          idFilterInput.placeholder = "채팅방 ID를 숫자로 입력해 주세요";
+          idFilterLabel.textContent = "ID";
+          idFilterInput.placeholder = "ID를 숫자로 입력해 주세요";
         }
 
         idFilterInput.value = "";
       };
 
       const syncDateMode = (selectedMode) => {
-        dateModeButtons.forEach((button) => {
-          button.classList.toggle("active", button.dataset.dateModeBtn === selectedMode);
-        });
+        dateModeSelect.value = selectedMode;
+        dateFilterLabel.textContent = selectedMode === "chat" ? "채팅방 생성일자" : "생성일자";
 
         dateFilterBlocks.forEach((block) => {
           block.classList.toggle("active", block.dataset.dateMode === selectedMode);
@@ -1752,16 +1734,12 @@
         }
       };
 
-      idModeButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-          syncIdMode(button.dataset.idModeBtn);
-        });
+      idModeSelect.addEventListener("change", (event) => {
+        syncIdMode(event.target.value);
       });
 
-      dateModeButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-          syncDateMode(button.dataset.dateModeBtn);
-        });
+      dateModeSelect.addEventListener("change", (event) => {
+        syncDateMode(event.target.value);
       });
 
       requestTabButtons.forEach((button) => {
